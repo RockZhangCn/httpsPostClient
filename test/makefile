@@ -6,16 +6,14 @@ FLAGS = -Wall -Werror -fPIC -g -O2 -s -ldl -lm -o
 
 SC_LIBRARY_PATH = ../httpspost
 
-SOURCE_FILE = exsample.cpp
+SOURCE_FILE = example.cpp libhttpspost_x86.so
 
 ifeq ($(CC),gcc)
-SSL_INCLUDE = ../openssl/x86/ssl/include
-OBJ = exsample_x86
+OBJ = example
 LIB = -lstdc++     \
       -lhttpspost_x86
 else
-SSL_INCLUDE = ../openssl/arm/ssl/include
-OBJ = exsample_arm
+OBJ = exsmple_arm
 LIB = -lstdc++     \
       -lhttpspost_arm
 endif

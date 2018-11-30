@@ -13,7 +13,6 @@ void ShowCerts(SSL * ssl)
 {
     X509 *cert;
     char *line;
-
     cert = SSL_get_peer_certificate(ssl);
     if (cert != NULL)
     {
@@ -37,6 +36,10 @@ void ShowCerts(SSL * ssl)
     if(SSL_get_verify_result(ssl) != X509_V_OK)
     {
         TRACE_HTTX("证书验证失败！\n");
+    }
+    else
+    {
+        TRACE_HTTX("证书验证成功！\n");
     }
 }
 
@@ -91,12 +94,14 @@ SSLSocket::~SSLSocket()
  */
 int SSLSocket::TcpConnect(string& host, unsigned int port, h_type type)
 {
+    TRACE_HTTX("host: %s\n", host.c_str());
     int ret = 0;
     // 如果不是空闲状态，或不处于连接中，直接返回
     if( _status != HTTPS_FREE && _status != HTTPS_TCP_CONNECTING)
     {
         return _status;
     }
+
     else if(_status == HTTPS_FREE)   // 处于空闲状态时，才做这部分初始工作
     {
         struct sockaddr_in peer;
@@ -253,6 +258,13 @@ int SSLSocket::SslConnect(string& host, unsigned int port, h_type type)
             Close();
             return HTTPS_FREE;
         }
+
+
+        if(!SSL_CTX_load_verify_locations(ctx, NULL, "/etc/ssl/certs"))
+        {
+            TRACE_HTTX( "SSL_CTX_load_verify_locations failed.\n" );
+        }
+
 
         /* 基于 ctx 产生一个新的 SSL */
         TRACE_HTTX( "SSL_CTX_new...\n" );
