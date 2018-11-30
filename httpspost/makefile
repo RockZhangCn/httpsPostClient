@@ -1,5 +1,5 @@
-CC=arm-uclibc-gcc
-#CC=gcc
+#CC=arm-uclibc-gcc
+CC=gcc
 
 FLAGS = -Wall -Werror -fPIC -g -shared -O2 -s -ldl -lm -o
 
@@ -33,7 +33,7 @@ endif
 SOURCE_FILE = sslSocket.cpp httpsPost.cpp
 
 $(OBJ):$(SOURCE_FILE)
-	$(CC) $(FLAGS)  $@  $(SOURCE_FILE) -I$(SSL_INCLUDE) $(SSL_LIB)/libssl.a $(SSL_LIB)/libcrypto.a
+	$(CC) $(FLAGS)  $@  $(SOURCE_FILE) -lcrypto -lssl 
 
     
 clean:

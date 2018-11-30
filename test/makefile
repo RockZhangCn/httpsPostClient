@@ -1,5 +1,5 @@
-CC=arm-uclibc-gcc
-#CC=gcc
+#CC=arm-uclibc-gcc
+CC=gcc
 
 FLAGS = -Wall -Werror -fPIC -g -O2 -s -ldl -lm -o
 
@@ -22,7 +22,7 @@ endif
 
     
 $(OBJ): $(SOURCE_FILE)
-	$(CC) $(FLAGS)  $@  $(SOURCE_FILE) -I$(SSL_INCLUDE) -L$(SC_LIBRARY_PATH) $(LIB)
+	$(CC) $(FLAGS)  $@  $(SOURCE_FILE)  -L$(SC_LIBRARY_PATH) $(LIB)
 
     
 #SERVER_SOURCE_FILE = server.c
